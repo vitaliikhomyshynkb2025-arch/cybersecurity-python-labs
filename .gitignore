@@ -1,0 +1,10 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ruff_cache/
+.DS_Store
+.env
+labs/lab01/data/*.csv
+labs/lab01/data/*.json
+ruff-report.*
