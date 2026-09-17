@@ -129,9 +129,8 @@ def log_event(function):
 @log_event
 def login(username: str, password: str) -> bool:
     """Перевірити облікові дані в зчитаному списку users_db."""
-    if not username or not username.strip() or not password:
-        raise ValueError("Логін і пароль не можуть бути порожніми.")
-    hash_value = generate_hash(password, PERSONAL_SALT)
+    # Реєстрація і вхід мають єдину перевірку даних та хешування.
+    username, hash_value = create_user(username, password)
     for stored_username, stored_hash in users_db:
         if stored_username == username:
             return hmac.compare_digest(hash_value, stored_hash)
@@ -140,7 +139,10 @@ def login(username: str, password: str) -> bool:
 
 def run():
     """Створити 10 навчальних облікових записів і виконати 5 входів."""
-    print("\nЗавдання 3 | SHA-256 | min_length=11 | salt=00008")
+    print(
+        f"\nЗавдання 3 | {HASH_ALGORITHM.upper()} | "
+        f"min_length={HASH_MIN_LENGTH} | salt={PERSONAL_SALT}"
+    )
     try:
         create_users(USERS_TO_REGISTER)
         users_db[:] = read_users()

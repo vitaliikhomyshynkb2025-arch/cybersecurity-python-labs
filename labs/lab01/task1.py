@@ -42,13 +42,18 @@ def run(seed=None):
     print(f"\nЗавдання 1 | {STUDENT_NAME} | Варіант {VARIANT_NUMBER}")
     passwords, indices = add_duplicates(PASSWORDS, seed)
     counts = Counter(passwords)
+    # Кожен унікальний пароль перевіряємо лише один раз.
+    levels = {
+        password: evaluate_password(
+            password, counts, CRITERIA, FORBIDDEN_PASSWORDS
+        )
+        for password in counts
+    }
     print(f"Індекси дублікатів (від 0): {indices}")
     print(f"{'Пароль':<23} {'Довжина':<8} {'Повтори':<8} Рівень")
     rows = []
     for password in passwords:
-        level = evaluate_password(
-            password, counts, CRITERIA, FORBIDDEN_PASSWORDS
-        )
+        level = levels[password]
         rows.append((password, len(password), counts[password], level))
         print(
             f"{password:<23} {len(password):<8} {counts[password]:<8} {level}"
