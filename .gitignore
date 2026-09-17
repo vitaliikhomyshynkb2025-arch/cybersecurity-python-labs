@@ -5,6 +5,6 @@ __pycache__/
 .ruff_cache/
 .DS_Store
 .env
-labs/lab01/data/*.csv
-labs/lab01/data/*.json
+# Generated data directories at any depth, including log.tmp.
+[Dd]ata/
 ruff-report.*
