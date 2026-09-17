@@ -1,10 +1,12 @@
 """Перевірки меж, пріоритетів доступу та збереження даних."""
 
 import hashlib
+import io
 import json
 import tempfile
 import unittest
 from collections import Counter
+from contextlib import redirect_stdout
 from pathlib import Path
 from unittest.mock import patch
 
@@ -31,6 +33,35 @@ class LabTests(unittest.TestCase):
         self.assertEqual(len(set(indices)), 3)
         self.assertEqual(result[10:], [PASSWORDS[i] for i in indices])
         self.assertEqual(len(PASSWORDS), 10)
+
+    def test_each_unique_password_checked_once(self):
+        """Зберегти всі рядки, але не повторювати однакові перевірки."""
+        with (
+            patch.object(
+                task1, "evaluate_password", wraps=task1.evaluate_password
+            ) as evaluate,
+            redirect_stdout(io.StringIO()),
+        ):
+            rows = task1.run(8)
+        self.assertEqual(len(rows), 13)
+        self.assertEqual(evaluate.call_count, len(set(PASSWORDS)))
+        self.assertEqual(rows[6], rows[12])
+
+    def test_registration_and_login_share_validation(self):
+        """Однаково перевіряти облікові дані при реєстрації та вході."""
+        cases = [
+            ("", "longpassword", ValueError),
+            ("   ", "longpassword", ValueError),
+            (None, "longpassword", ValueError),
+            ("user", "", ValueError),
+            ("user", None, ValueError),
+            ("user", "short", task3.ValidationError),
+        ]
+        for username, password, error in cases:
+            with self.subTest(username=username, password=password):
+                for function in (task3.create_user, task3.login):
+                    with self.assertRaises(error):
+                        function(username, password)
 
     def test_password_categories(self):
         """Перевірити всі категорії та обидві межі довжини."""
