@@ -25,6 +25,13 @@ USERS_TO_REGISTER = (
     ("student09", "Study@Python09"),
     ("student10", "Study@Python10"),
 )
+LOGIN_ATTEMPTS = (
+    ("student01", "Study@Python01"),
+    ("student01", "WrongPassword!"),
+    ("unknown", "Study@Python01"),
+    ("", "Study@Python01"),
+    ("student01", "short"),
+)
 users_db = []
 
 
@@ -137,12 +144,8 @@ def login(username: str, password: str) -> bool:
     return False
 
 
-def run():
-    """Створити 10 навчальних облікових записів і виконати 5 входів."""
-    print(
-        f"\nЗавдання 3 | {HASH_ALGORITHM.upper()} | "
-        f"min_length={HASH_MIN_LENGTH} | salt={PERSONAL_SALT}"
-    )
+def prepare_database():
+    """Підготувати й показати базу або повідомити про помилку."""
     try:
         create_users(USERS_TO_REGISTER)
         users_db[:] = read_users()
@@ -158,29 +161,40 @@ def run():
     except (IOError, ValidationError, ValueError) as error:
         print(f"Не вдалося підготувати базу: {type(error).__name__}.")
         return False
-    attempts = (
-        ("student01", "Study@Python01"),
-        ("student01", "WrongPassword!"),
-        ("unknown", "Study@Python01"),
-        ("", "Study@Python01"),
-        ("student01", "short"),
+    return True
+
+
+def demonstrate_login(username, password):
+    """Показати результат входу; повернути False при файловій помилці."""
+    try:
+        result = login(username, password)
+        print(f"login({username!r}) -> {result}")
+    except ValidationError:
+        print(f"login({username!r}) -> ValidationError")
+    except ValueError:
+        print(f"login({username!r}) -> ValueError")
+    except FileNotFoundError:
+        print("Файл журналу недоступний.")
+        return False
+    except PermissionError:
+        print("Немає дозволу на запис журналу.")
+        return False
+    except IOError:
+        print("Помилка читання або запису журналу.")
+        return False
+    return True
+
+
+def run():
+    """Підготувати базу та виконати всі демонстраційні входи."""
+    print(
+        f"\nЗавдання 3 | {HASH_ALGORITHM.upper()} | "
+        f"min_length={HASH_MIN_LENGTH} | salt={PERSONAL_SALT}"
     )
+    if not prepare_database():
+        return False
     completed = True
-    for username, password in attempts:
-        try:
-            result = login(username, password)
-            print(f"login({username!r}) -> {result}")
-        except ValidationError:
-            print(f"login({username!r}) -> ValidationError")
-        except ValueError:
-            print(f"login({username!r}) -> ValueError")
-        except FileNotFoundError:
-            print("Файл журналу недоступний.")
-            completed = False
-        except PermissionError:
-            print("Немає дозволу на запис журналу.")
-            completed = False
-        except IOError:
-            print("Помилка читання або запису журналу.")
+    for username, password in LOGIN_ATTEMPTS:
+        if not demonstrate_login(username, password):
             completed = False
     return completed
