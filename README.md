@@ -110,3 +110,17 @@ cd cybersecurity-python-labs
 - PEP 8: https://peps.python.org/pep-0008/
 - Ruff: https://docs.astral.sh/ruff/configuration/
 - hashlib: https://docs.python.org/3/library/hashlib.html
+
+## Лабораторна 2
+
+Варіант 8: модель користувачів і сесій та аналізатор DNS-запитів.
+Команди з кореня репозиторію:
+
+```sh
+python -m labs.lab02.main demo
+python -m labs.lab02.main analyze
+```
+
+Інструкції, структура архіву, параметри та правила аналізу описані у
+[labs/lab02/README.md](labs/lab02/README.md).
+Навчальні файли data_v08 отримайте з lab2_data.zip; папки data не публікуються.
