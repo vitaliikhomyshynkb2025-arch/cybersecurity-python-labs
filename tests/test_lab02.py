@@ -294,6 +294,28 @@ class DNSTests(unittest.TestCase):
 class CLITests(unittest.TestCase):
     """Перевірити коди завершення та відсутність дій при імпорті."""
 
+    def test_interrupted_command_exits_without_traceback(self):
+        """Перехоплювати переривання у справжній точці запуску CLI."""
+        script = (
+            "import runpy, sys\n"
+            "from unittest.mock import patch\n"
+            "sys.argv = ['labs.lab02.main', 'demo']\n"
+            "with patch('labs.lab02.task1.run_demo', "
+            "side_effect=KeyboardInterrupt):\n"
+            "    runpy.run_module('labs.lab02.main', run_name='__main__')\n"
+        )
+        result = subprocess.run(
+            [sys.executable, "-c", script],
+            cwd=REPO,
+            capture_output=True,
+            text=True,
+            check=False,
+            timeout=10,
+        )
+        self.assertEqual(result.returncode, 130)
+        self.assertIn("Роботу перервано користувачем.", result.stderr)
+        self.assertNotIn("Traceback", result.stdout + result.stderr)
+
     def test_positive_integer_and_subcommand_validation(self):
         """Відхиляти неправильний поріг до запуску аналізу."""
         self.assertEqual(main.positive_integer("30"), 30)
