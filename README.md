@@ -124,3 +124,19 @@ python -m labs.lab02.main analyze
 Інструкції, структура архіву, параметри та правила аналізу описані у
 [labs/lab02/README.md](labs/lab02/README.md).
 Навчальні файли data_v08 отримайте з lab2_data.zip; папки data не публікуються.
+
+## Лабораторна 3
+
+Варіант 8: FastAPI та SQLite для обліку часу відновлення сервісів у хвилинах.
+Навчальний seed.json цієї роботи включено в Git, робочі бази ігноруються.
+
+```sh
+python -m labs.lab03.seed
+uvicorn labs.lab03.main:app --reload --host 127.0.0.1 --port 8000
+# В іншому терміналі, незалежна перевірка на тимчасовій базі:
+python -m labs.lab03.verify
+```
+
+Документація: http://127.0.0.1:8000/docs.
+Установлення, усі параметри, початкові дані та приклади CRUD:
+[labs/lab03/README.md](labs/lab03/README.md).

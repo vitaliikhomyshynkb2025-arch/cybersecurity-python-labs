@@ -8,3 +8,11 @@ __pycache__/
 # Generated data directories at any depth, including log.tmp.
 [Dd]ata/
 ruff-report.*
+# Lab 3 seed is reproducible source data; runtime databases stay local.
+!labs/lab03/data/
+labs/lab03/data/*
+!labs/lab03/data/seed.json
+labs/lab03/data/*.sqlite3
+labs/lab03/data/*.sqlite3-*
+labs/lab03/data/*.db
+labs/lab03/data/*.db-*
