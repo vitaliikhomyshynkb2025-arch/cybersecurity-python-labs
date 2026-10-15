@@ -1,0 +1,74 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "database"
+    },
+    {
+      "id": 2,
+      "name": "web_service"
+    },
+    {
+      "id": 3,
+      "name": "file_storage"
+    }
+  ],
+  "records": [
+    {
+      "code": "V08-01",
+      "title": "Вимірювання відновлення 01",
+      "category_id": 1,
+      "value": 75.0,
+      "status": "new"
+    },
+    {
+      "code": "V08-02",
+      "title": "Вимірювання відновлення 02",
+      "category_id": 2,
+      "value": 20.0,
+      "status": "in_progress"
+    },
+    {
+      "code": "V08-03",
+      "title": "Вимірювання відновлення 03",
+      "category_id": 3,
+      "value": 40.0,
+      "status": "done"
+    },
+    {
+      "code": "V08-04",
+      "title": "Вимірювання відновлення 04",
+      "category_id": 1,
+      "value": 90.0,
+      "status": "new"
+    },
+    {
+      "code": "V08-05",
+      "title": "Вимірювання відновлення 05",
+      "category_id": 2,
+      "value": 35.0,
+      "status": "done"
+    },
+    {
+      "code": "V08-06",
+      "title": "Вимірювання відновлення 06",
+      "category_id": 3,
+      "value": 65.0,
+      "status": "in_progress"
+    },
+    {
+      "code": "V08-07",
+      "title": "Вимірювання відновлення 07",
+      "category_id": 1,
+      "value": 55.0,
+      "status": "done"
+    },
+    {
+      "code": "V08-08",
+      "title": "Вимірювання відновлення 08",
+      "category_id": 2,
+      "value": 60.0,
+      "status": "new"
+    }
+  ]
+}
