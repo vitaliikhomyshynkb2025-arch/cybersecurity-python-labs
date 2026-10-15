@@ -85,4 +85,8 @@ def main(argv=None):
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    try:
+        raise SystemExit(main())
+    except KeyboardInterrupt:
+        print("\nРоботу перервано користувачем.", file=sys.stderr)
+        raise SystemExit(130) from None
