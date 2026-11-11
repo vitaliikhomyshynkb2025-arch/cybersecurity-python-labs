@@ -3,6 +3,7 @@ venv/
 __pycache__/
 *.py[cod]
 .ruff_cache/
+.pytest_cache/
 .DS_Store
 .env
 # Generated data directories at any depth, including log.tmp.
@@ -16,3 +17,7 @@ labs/lab03/data/*.sqlite3
 labs/lab03/data/*.sqlite3-*
 labs/lab03/data/*.db
 labs/lab03/data/*.db-*
+# Lab 4 offline fixture is source; generated reports remain local.
+!labs/lab04/data/
+labs/lab04/data/*
+!labs/lab04/data/nvd_sample.json
